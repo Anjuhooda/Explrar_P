@@ -92,7 +92,7 @@ from jose import jwt , JWTError
 EXPIRY=24*60
 SECRET_KEY="hello"
 ALGORITHM="HS256"
-from Database import get_db
+from database import get_db
 def  Create_token(data:dict,expriy:Optional[timedelta]=None):
     user_data= data.copy()
     if expriy:
