@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class User(Base):
-    __tablename__ = "usertraveller"
+    __tablename__ = "traveller_user"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, nullable=False)
@@ -20,7 +20,7 @@ class User(Base):
 
 
 class Profile(Base):
-    __tablename__="profile_image"
+    __tablename__="image_of_profile"
     id = Column(Integer, primary_key=True, index=True)
     traveller_id = Column(Integer, nullable=False)
     bio = Column(String, nullable=True)
@@ -30,5 +30,5 @@ class Profile(Base):
     content_type = Column(String, nullable=True)
     image = Column(LargeBinary)
     
-    traveller_id=Column(Integer,ForeignKey("usertraveller.id"))
+    traveller_id=Column(Integer,ForeignKey("traveller_user.id"))
     traveller=relationship("User",back_populates="profile")

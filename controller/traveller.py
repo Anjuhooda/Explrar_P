@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException,Depends,UploadFile,File,Form
 from model.traveller import User,Profile
-from schema.traveller import UserA,Update_Date
+from schema.traveller import User1,Update_Date
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 
@@ -18,7 +18,7 @@ def hash_password(password: str):
 def veryfiy_password(password:str, plan_password:str):
     return pwd_context(password,plan_password)
 
-def create_user(data: UserA, db: Session):
+def create_user(data: User1, db: Session):
 
 
     if db.query(User).filter(User.email == data.email).first():
@@ -86,13 +86,20 @@ def auth(db:Session,email:str,password:str):
     return users
 
 
+
+
+############ TOKEN ################
+
+
 from typing import Optional
 from datetime import timedelta,datetime
 from jose import jwt , JWTError
+from database import get_db
+
 EXPIRY=24*60
 SECRET_KEY="hello"
 ALGORITHM="HS256"
-from database import get_db
+
 def  Create_token(data:dict,expriy:Optional[timedelta]=None):
     user_data= data.copy()
     if expriy:
@@ -129,7 +136,7 @@ blacklisted_tokens = set()
 
 def logout(token: str):
     blacklisted_tokens.add(token)
-    print("///////////////////////////////////////////////////////",blacklisted_tokens)
+    print("//////////////////////////",blacklisted_tokens)
     
     return {"message": "Logout successful",
             "token":blacklisted_tokens}

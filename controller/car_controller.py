@@ -1,9 +1,9 @@
 from fastapi import HTTPException
-from schema.car_schema import CarA,Update_car,bookingA
+from schema.car_schema import Car1,Update_car,Boooking1
 from model.car_model import Car,Booking
 from sqlalchemy.orm import Session
 
-def create_car(data:CarA,db:Session):
+def create_car(data:Car1,db:Session):
     user= db.query(Car).filter(Car.car_name==data.car_name).first()
     if user:
         raise  HTTPException(status_code=404,detail="Not valid carname")
@@ -31,8 +31,8 @@ def get_all_cars(db:Session):
     cars=db.query(Car).all()
     if not cars:
         raise HTTPException(status_code=404,detail="not valid car data is available")
-    
     return cars
+
 def get_car_by_id(id:int,db:Session):
     carsGet=db.query(Car).filter(Car.car_id ==id).first()
     if not carsGet:
@@ -54,7 +54,7 @@ def Uptade_car_data(id:int,data:Update_car,db:Session):
 from model.traveller import User
 from datetime import datetime
 
-def  booking_car(data:bookingA,db:Session):
+def  booking_car(data:Booking1,db:Session):
     traveller_booking=db.query(User).filter(User.id==data.traveller_id).first()
     if not traveller_booking:
         raise HTTPException(status_code=404,detail="not valid user travller ")
@@ -82,7 +82,7 @@ def  booking_car(data:bookingA,db:Session):
 
     
 
-def booking_cencle(id:int,car_id:int,db:Session):
+def booking_cancal(id:int,car_id:int,db:Session):
     delete_booking=db.query(Booking).filter(Booking.id==id).first()
     if not delete_booking:
         raise HTTPException(status_code=404,detail="not valid user booking id ")

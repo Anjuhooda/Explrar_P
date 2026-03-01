@@ -1,13 +1,13 @@
 from fastapi import APIRouter,Depends
-router=APIRouter()
 from sqlalchemy.orm import Session
-from schema.car_schema import CarA,Update_car,bookingA
+from schema.car_schema import Car1,Update_car, Booking1
 from database import get_db
+from controller.car_controller import create_car,delete_car_data,get_all_cars,get_car_by_id,Uptade_car_data,booking_car,booking_cancal
 
-from controller.car_controller import create_car,delete_car_data,get_all_cars,get_car_by_id,Uptade_car_data,booking_car,booking_cencle
+router=APIRouter()
+
 @router.post("/carcreate")
-def car_add_create(car_data:CarA,
-    db:Session=Depends(get_db)):
+def car_add_create(car_data:Car1,db:Session=Depends(get_db)):
     return create_car(car_data,db)
 
 @router.delete("/cardelet")
@@ -19,7 +19,7 @@ def car_getting(db:Session=Depends(get_db)):
     return get_all_cars(db)
 
 @router.get("/getbyid")
-def getById(id:int,db:Session=Depends(get_db)):
+def get_By_Id(id:int,db:Session=Depends(get_db)):
     return get_car_by_id(id,db)
 
 @router.put("/update")
@@ -28,9 +28,9 @@ def update_car_date(id:int,data:Update_car,db:Session=Depends(get_db)):
 
 
 @router.post("/booking")
-def booking_cars(data:bookingA,db:Session=Depends(get_db)):
+def booking_cars(data:Booking1,db:Session=Depends(get_db)):
     return booking_car(data,db)
 
 @router.delete("/removebooking")
-def cancle_booking(id:int,car_id:int,db:Session=Depends(get_db)):
+def cancal_booking(id:int,car_id:int,db:Session=Depends(get_db)):
     return  booking_cencle(id,car_id,db)

@@ -14,7 +14,6 @@ def user_create(data: UserA, db: Session = Depends(get_db)):
 def get_all_traveller(db:Session=Depends(get_db)):
     return get_all(db)
 
-
 @router.put("/update")
 def Update_register(user_id: int, user_date: Update_Date, db: Session = Depends(get_db)):
     return Update_register_user(user_id, user_date, db)
@@ -23,7 +22,6 @@ def Update_register(user_id: int, user_date: Update_Date, db: Session = Depends(
 def delete_user(user_id:int,db:Session=Depends(get_db)):
     return  delete_register_user(user_id,db)
 
-
 @router.post("/login")
 def login_with_token(login_in:Update_Date,db:Session=Depends(get_db)):
     token=get_token(login_in,db)
@@ -31,14 +29,9 @@ def login_with_token(login_in:Update_Date,db:Session=Depends(get_db)):
         "token" :token
     }
 
-
-
 @router.post("/logout")
 def logout_Register(token:str=Depends(valid_token)):
     return logout(token)
-
-
-
 
 from fastapi import File,UploadFile,Form
 @router.post("/creatprofile")
@@ -49,7 +42,6 @@ async def Profile_create(file:UploadFile=File(...),
                     phone:str=Form(...),
                     db:Session=Depends(get_db)):
     return  await  create_profile_register(file,bio,discription,register_id,phone,db)
-
 
 @router.get("/get image")
 def get_register_image(profile_id:int,db:Session=Depends(get_db)):
